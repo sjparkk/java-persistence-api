@@ -3,7 +3,11 @@ package com.example.jpajoinfetchjoincompare
 import com.example.jpajoinfetchjoincompare.domain.Member
 import com.example.jpajoinfetchjoincompare.domain.Team
 import com.example.jpajoinfetchjoincompare.repository.TeamRepository
+import com.example.jpajoinfetchjoincompare.service.TeamService
+import org.hibernate.LazyInitializationException
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestConstructor
 import org.springframework.transaction.annotation.Transactional
@@ -12,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class JoinFetchJoinCompareTest(
+    val teamService: TeamService,
     val teamRepository: TeamRepository
 ) {
 
@@ -59,6 +64,33 @@ class JoinFetchJoinCompareTest(
 
         teamRepository.save(team1)
         teamRepository.save(team2)
+
+    }
+
+    @Test
+    fun joinTest() {
+
+        /**
+         * 실제 발생 쿼리
+         * 1. Member가 조인되어 쿼리는 실행되었지만 Select 절에는 Team 관련 컬럼들만 존재
+         *      -> 일반 조인은 실제 쿼리에 join을 걸어주기는 하지만 join 대상의 영속성까지는 관여하지 않아 Member 관련 컬럼은 존재 x
+        select
+            team0_.id as id1_1_,
+            team0_.name as name2_1_
+        from
+            team team0_
+        inner join
+            member members1_
+                on team0_.id=members1_.team_id
+         */
+        val findJoin: List<Team> = teamService.findAllJoinMember()
+
+        println(findJoin)
+
+        //일반 조인인 경우이므로 Member Entity는 초기화되지 않아 Member 관련 필드 접근 시 LazyInitializationException 발생
+        assertThrows(LazyInitializationException::class.java) {
+            findJoin[0].members[0].age
+        }
 
     }
 
