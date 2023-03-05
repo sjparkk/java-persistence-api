@@ -94,4 +94,29 @@ class JoinFetchJoinCompareTest(
 
     }
 
+    @Test
+    fun fetchJoinTest() {
+
+        /**
+         * 실제 발생 쿼리
+         * 1. 일반 조인과 차이점으로는 대상 Entity(Team)와 Fetch Join이 걸린 Entity(Member) 모두 영속화
+        select
+            distinct team0_.id as id1_1_0_,
+            members1_.id as id1_0_1_,
+            team0_.name as name2_1_0_,
+            members1_.age as age2_0_1_,
+            members1_.name as name3_0_1_,
+            members1_.team_id as team_id4_0_1_,
+            members1_.team_id as team_id4_0_0__,
+            members1_.id as id1_0_0__
+        from
+            team team0_
+        inner join
+            member members1_
+                on team0_.id=members1_.team_id
+         */
+        val findFetchJoin = teamService.findAllFetchJoinMember()
+        println(findFetchJoin)
+    }
+
 }
