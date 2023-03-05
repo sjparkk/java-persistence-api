@@ -119,4 +119,41 @@ class JoinFetchJoinCompareTest(
         println(findFetchJoin)
     }
 
+    /**
+     * 일반 조인 쓰는 경우
+     *
+     * 1. 무조건 Fetch Join 사용은 x (성능 고려)
+     * 2. 필요한 Entity만 영속성 컨텍스트에 올려서 사용할 때
+     *
+     * 사용 예시
+     * - team1-member2라는 이름을 가진 member가 속해 있는 Team을 찾는 경우
+     * -> 이런 경우 쿼리 검색 조건에는 연관관계가 있는 Member의 조건이 필요하지만 결과 값에는 Member의 관련된 데이터가 필요하지 않다.
+     * -> 이럴 때 굳이 Fetch Join을 사용하여 모두 영속화 시키는 것보다 일반 Join을 사용하는 것이 효율적
+     */
+    @Test
+    fun joinConditionTest() {
+
+        /**
+         * 실제 발생 쿼리
+         *
+        select
+           distinct team0_.id as id1_1_,
+            team0_.name as name2_1_
+        from
+            team team0_
+        inner join
+            member members1_
+                on team0_.id=members1_.team_id
+        where
+            members1_.name=?
+         */
+        val findJoinByName = teamService.findMemberJoinByMemberName("team2-member4")
+        println(findJoinByName)
+
+        //조회는 잘 되지만 영속화 되지 않아 초기화가 되지 않은 member 필드에 접근 시 LazyInitializationException 나는 것은 마찬가지
+        assertThrows(LazyInitializationException::class.java) {
+            findJoinByName[0].members[0].age
+        }
+    }
+
 }
