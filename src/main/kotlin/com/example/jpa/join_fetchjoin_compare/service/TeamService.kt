@@ -1,7 +1,7 @@
-package com.example.jpajoinfetchjoincompare.service
+package com.example.jpa.join_fetchjoin_compare.service
 
-import com.example.jpajoinfetchjoincompare.domain.Team
-import com.example.jpajoinfetchjoincompare.repository.TeamRepository
+import com.example.jpa.join_fetchjoin_compare.domain.Team
+import com.example.jpa.join_fetchjoin_compare.repository.TeamRepository
 import org.springframework.stereotype.Service
 
 

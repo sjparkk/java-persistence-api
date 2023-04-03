@@ -1,9 +1,9 @@
-package com.example.jpajoinfetchjoincompare
+package com.example.jpa.join_fetchjoin_compare
 
-import com.example.jpajoinfetchjoincompare.domain.Member
-import com.example.jpajoinfetchjoincompare.domain.Team
-import com.example.jpajoinfetchjoincompare.repository.TeamRepository
-import com.example.jpajoinfetchjoincompare.service.TeamService
+import com.example.jpa.join_fetchjoin_compare.domain.Member
+import com.example.jpa.join_fetchjoin_compare.domain.Team
+import com.example.jpa.join_fetchjoin_compare.repository.TeamRepository
+import com.example.jpa.join_fetchjoin_compare.service.TeamService
 import org.hibernate.LazyInitializationException
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach

@@ -1,10 +1,10 @@
-package com.example.jpajoinfetchjoincompare
+package com.example.jpa.join_fetchjoin_compare
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class JpaJoinFetchjoinCompareApplicationTests {
+class JpaApplicationTests {
 
     @Test
     fun contextLoads() {

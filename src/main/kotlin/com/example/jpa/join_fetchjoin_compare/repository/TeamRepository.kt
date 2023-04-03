@@ -1,6 +1,6 @@
-package com.example.jpajoinfetchjoincompare.repository
+package com.example.jpa.join_fetchjoin_compare.repository
 
-import com.example.jpajoinfetchjoincompare.domain.Team
+import com.example.jpa.join_fetchjoin_compare.domain.Team
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 

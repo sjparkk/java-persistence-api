@@ -1,4 +1,4 @@
-package com.example.jpajoinfetchjoincompare.domain
+package com.example.jpa.join_fetchjoin_compare.domain
 
 import javax.persistence.*
 
