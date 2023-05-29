@@ -32,4 +32,27 @@ class Member1ServiceTest(
          */
     }
 
+    @Test
+    @Transactional
+    fun `saveAll() 시간 측정 테스트`() {
+        val start = System.currentTimeMillis()
+
+        var count = 300000
+
+        val members = mutableListOf<Member1>()
+
+        while (count-- > 0) {
+            val member1 = Member1(name = "test", age = 20)
+            members.add(member1)
+        }
+
+        memberRepository.saveAll(members)
+
+        println("시간 측정 결과 : " + (System.currentTimeMillis() - start) + "ms")
+        /**
+         데이터 10만건 -> 6.0초
+         데이터 30만건 -> 10.3초
+         */
+    }
+
 }
